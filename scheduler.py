@@ -175,11 +175,11 @@ class Scheduler(object):
       for i, time in enumerate(slots):
         print(f'time period {i}:\n')
         for cl in time:
-          print(f'  class {cl.name}: ')
+          print_str = '  class {}: '.format(cl.name)
           for s in students:
             if solver.Value(sc_variables[(s.id, cl.id)]):
-              print(f'{s.name}, ')
-          print('\n')
+              print_str += str(s.name) + ", "
+          print (print_str + '\n')
     else:
       print("Impossible!\n")
 
