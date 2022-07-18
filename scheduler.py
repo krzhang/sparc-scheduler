@@ -1,4 +1,5 @@
 import typing
+import markdown
 from collections.abc import Sequence
 import csv
 from ortools.sat.python import cp_model
@@ -121,7 +122,7 @@ class Schedule(object):
     self.curriculum = curriculum
     self.solutions = solutions
     
-  def student_view(self, student):
+  def student_view(self, student, html=False):
     output = "# {}({})'s Schedule\n\n".format(student, student.id)
     for i, day in enumerate(self.curriculum):
       output += "## Day {}: \n\n".format(day.date)
@@ -129,7 +130,10 @@ class Schedule(object):
       for j, slot in enumerate(sol_day):
         output += "* Slot {}: {}\n".format(j, slot[student])
       output += "\n"
-    return output
+    if html:
+      return markdown.markdown(output)
+    else:
+      return output
           
 class Scheduler(object):
   """ 
@@ -228,3 +232,4 @@ def test():
   scheduler = Scheduler(students, curriculum)
   sched = scheduler.make_schedule()
   print(sched.student_view(students[4]))
+  print(sched.student_view(students[3], html=True))
