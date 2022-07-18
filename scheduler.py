@@ -87,7 +87,8 @@ class Class:
     self.id = Class.get_id()
 
   def __repr__(self):
-    return self.name + " {}".format(self.class_status[0])
+    # return self.name + " {}".format(self.class_status[0])
+    return self.name
 
   @classmethod
   def get_id(cls):
@@ -96,10 +97,11 @@ class Class:
   
 class Day:
 
-  def __init__(self, classes = Sequence[ClassBundle]):
+  def __init__(self, date, classes = Sequence[ClassBundle]):
     """ 
     currently only supports 0, 1, or 3 tracked classes. (others being mixed)
     """
+    self.date = date
     self.class_bundles = classes
     assert len(classes) == SLOTS_PER_DAY
     
@@ -112,7 +114,23 @@ class Day:
     # we need to transpose since right now we have the iterations of a class as rows instead of
     # columns, and we want the rows to correspond to different time periods    
     return zip(*class_slots)
+
+class Schedule(object):
+
+  def __init__(self, curriculum, solutions):
+    self.curriculum = curriculum
+    self.solutions = solutions
     
+  def student_view(self, student):
+    output = "# {}({})'s Schedule\n\n".format(student, student.id)
+    for i, day in enumerate(self.curriculum):
+      output += "## Day {}: \n\n".format(day.date)
+      sol_day = self.solutions[i]
+      for j, slot in enumerate(sol_day):
+        output += "* Slot {}: {}\n".format(j, slot[student])
+      output += "\n"
+    return output
+          
 class Scheduler(object):
   """ 
   The main class. Given students and curriculum, make a schedule
@@ -125,17 +143,17 @@ class Scheduler(object):
     self.curriculum = curriculum
   
   def make_schedule(self):
-    return [self.make_schedule_day(day) for day in self.curriculum]
+    solutions = [self.make_schedule_day(day, printing=False) for day in self.curriculum]
+    sched = Schedule(self.curriculum, solutions)
+    return sched
   
-  def make_schedule_day(self, day):
+  def make_schedule_day(self, day, printing=True):
     students = self.students
     slots = list(day.make_slots())
+    classes_matrix = list(zip(*slots))
     
-    print("slots made")
-    for s in slots:
-      print("  " + str(s))
-
     model = cp_model.CpModel()
+
     
     student_ids = [s.id for s in self.students]
     class_ids = sum([[t.id for t in time] for time in slots], []) # a list of all class ids
@@ -143,12 +161,12 @@ class Scheduler(object):
     # example variable: 3_in_7 means studen 3 is in slot 7
     sc_variables = {(s, c):model.NewIntVar(0, 1, "{}_in_{}".format(s, c))
                     for s in student_ids for c in class_ids}
-
-    print (f"{len(sc_variables)} variables made")
+    if printing:
+      print (f"{len(sc_variables)} variables made")
 
     # TODO: [ortools.sat.python.cp_model API documentation](https://google.github.io/or-tools/python/ortools/sat/python/cp_model.html)
     
-    # creat the constraints
+    # create the constraints
     # 1. each student is in 1 class per time period:
     for s in student_ids:
       for time in slots:
@@ -156,7 +174,8 @@ class Scheduler(object):
         lin_expr = 0
         for i in class_ids_for_time:
           lin_expr += sc_variables[(s,i)]
-        # print("  constraint: " + str(lin_expr))
+        if printing:
+          print("  constraint: " + str(lin_expr))
         model.Add(lin_expr == 1)
 
     # 2. class size constraints
@@ -164,28 +183,48 @@ class Scheduler(object):
       lin_expr = 0
       for s in student_ids:
         lin_expr += sc_variables[(s, i)]
-      # print("  constraint: " + str(lin_expr))
+      if printing:
+        print("  constraint: " + str(lin_expr))
       model.Add(lin_expr <= CLASS_SIZE)
 
+    # 3. each student goes to all the classes
+    for s in student_ids:
+      for cl in classes_matrix:
+        lin_expr = 0
+        for i in [x.id for x in cl]:
+          lin_expr += sc_variables[(s, i)]
+        if printing:
+          print("  constraint: " + str(lin_expr))
+        model.Add(lin_expr == 1)
+      
     solver = cp_model.CpSolver()
     status = solver.Solve(model)
 
-
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+      solution = []
       for i, time in enumerate(slots):
-        print(f'time period {i}:\n')
+        solution.append({})
+        if printing:
+          print(f'time period {i}:\n')
         for cl in time:
           print_str = '  class {}: '.format(cl.name)
           for s in students:
             if solver.Value(sc_variables[(s.id, cl.id)]):
+              solution[i][s] = cl
               print_str += str(s.name) + ", "
-          print (print_str + '\n')
+          if printing:
+            print (print_str + '\n')
+      return solution
     else:
-      print("Impossible!\n")
+      if printing:
+        print("Impossible!\n")
+      return None
+
 
 def test():
   import data
-  curriculum = [Day([ClassBundle(b) for b in d]) for d in data.curriculum]
+  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d in data.curriculum]
   students = Student.load_from_file("students.csv")
   scheduler = Scheduler(students, curriculum)
-  scheduler.make_schedule()
+  sched = scheduler.make_schedule()
+  print(sched.student_view(students[4]))
