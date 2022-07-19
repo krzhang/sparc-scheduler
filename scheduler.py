@@ -8,6 +8,7 @@ STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
 SLOTS_PER_DAY = 3
 CLASS_SIZE = 14
+TIMES = ["9:30AM", "10:30AM", "11:30AM"]
 
 class Student:
 
@@ -29,6 +30,7 @@ class Student:
     students = []
     with open("students.csv", newline='') as csvfile:
       reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+      next(reader, None)
       for row in reader:
         students.append(cls(row[0], row[1]))
     print ("{} students loaded".format(len(students)))
@@ -118,15 +120,16 @@ class Day:
 
 class Schedule(object):
 
-  def __init__(self, curriculum, solutions):
+  def __init__(self, students, curriculum, solutions):
+    self.students = students
     self.curriculum = curriculum
-    self.solutions = solutions
+    self.solutions = solutions # each a solution is a slots, solutions
     
   def student_view(self, student, html=False):
     output = "# {}({})'s Schedule\n\n".format(student, student.id)
     for i, day in enumerate(self.curriculum):
       output += "## Day {}: \n\n".format(day.date)
-      sol_day = self.solutions[i]
+      _, sol_day = self.solutions[i]
       for j, slot in enumerate(sol_day):
         output += "* Slot {}: {}\n".format(j, slot[student])
       output += "\n"
@@ -134,7 +137,27 @@ class Schedule(object):
       return markdown.markdown(output)
     else:
       return output
-          
+
+  def class_view(self, day_index):
+    day = self.curriculum[day_index]
+    slots, solution = self.solutions[day_index]
+    output = "# {} Schedule\n\n".format(day.date)
+    for i, time in enumerate(slots):
+      output += "## " + TIMES[i] + '\n'
+      for cl in time:
+        first = True
+        print_str = '### {}: '.format(cl.name)
+        for s in self.students:
+          if solution[i][s] == cl:
+            if first:
+              print_str += str(s.name)
+              first = False
+            else:
+              print_str += ", " + str(s.name)
+        print_str += "\n"
+        output += print_str
+    return output
+    
 class Scheduler(object):
   """ 
   The main class. Given students and curriculum, make a schedule
@@ -148,7 +171,7 @@ class Scheduler(object):
   
   def make_schedule(self):
     solutions = [self.make_schedule_day(day, printing=False) for day in self.curriculum]
-    sched = Schedule(self.curriculum, solutions)
+    sched = Schedule(self.students, self.curriculum, solutions)
     return sched
   
   def make_schedule_day(self, day, printing=True):
@@ -158,7 +181,6 @@ class Scheduler(object):
     
     model = cp_model.CpModel()
 
-    
     student_ids = [s.id for s in self.students]
     class_ids = sum([[t.id for t in time] for time in slots], []) # a list of all class ids
     # first, we need a variable for each (student, class) combo
@@ -212,17 +234,19 @@ class Scheduler(object):
           print(f'time period {i}:\n')
         for cl in time:
           print_str = '  class {}: '.format(cl.name)
+          first = True
           for s in students:
             if solver.Value(sc_variables[(s.id, cl.id)]):
               solution[i][s] = cl
-              print_str += str(s.name) + ", "
           if printing:
             print (print_str + '\n')
-      return solution
+      return slots, solution
     else:
       if printing:
         print("Impossible!\n")
       return None
+
+    
 
 
 def test():
@@ -231,5 +255,7 @@ def test():
   students = Student.load_from_file("students.csv")
   scheduler = Scheduler(students, curriculum)
   sched = scheduler.make_schedule()
-  print(sched.student_view(students[4]))
-  print(sched.student_view(students[3], html=True))
+  # print(sched.student_view(students[4]))
+  # print(sched.student_view(students[3], html=True))
+  print(sched.class_view(0))
+  

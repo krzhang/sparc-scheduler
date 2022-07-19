@@ -1,12 +1,12 @@
 curriculum = [
   ("7/19/22", [
     {"MIXED": "Philosophy of Therapy"},
-    {"MIXED": "Map and Territory"},
+    {"MIXED": "How to get the Most Out of SPARC"},
     {"MIXED": "Graphical Models and Reality"}
   ]),
   ("7/20/22", [
     {"MIXED": "Bug Generators"},
-    {"MIXED": "How to get the Most Out of SPARC"},
+    {"MIXED": "Map and Territory"},
     {"MIXED": "Calibration"}
   ]),
   ("7/21/22", [
