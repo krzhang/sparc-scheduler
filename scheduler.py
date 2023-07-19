@@ -8,7 +8,7 @@ STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
 SLOTS_PER_DAY = 3
 CLASS_SIZE = 14
-TIMES = ["9:30AM", "10:30AM", "11:30AM"]
+TIMES = ["9:30AM-10:20AM", "10:30AM-11:20AM", "11:30AM-12:20PM"]
 
 class Student:
 
@@ -28,7 +28,7 @@ class Student:
   @classmethod
   def load_from_file(cls, filename):
     students = []
-    with open("students.csv", newline='') as csvfile:
+    with open("students-2023.csv", newline='') as csvfile:
       reader = csv.reader(csvfile, delimiter=',', quotechar='|')
       next(reader, None)
       for row in reader:
@@ -246,16 +246,13 @@ class Scheduler(object):
         print("Impossible!\n")
       return None
 
-    
-
 
 def test():
-  import data
-  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d in data.curriculum]
-  students = Student.load_from_file("students.csv")
+  import data_2023
+  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d in data_2023.curriculum]
+  students = Student.load_from_file("students-2023.csv")
   scheduler = Scheduler(students, curriculum)
   sched = scheduler.make_schedule()
   # print(sched.student_view(students[4]))
   # print(sched.student_view(students[3], html=True))
   print(sched.class_view(0))
-  
