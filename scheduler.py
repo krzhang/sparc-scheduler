@@ -7,7 +7,7 @@ from ortools.sat.python import cp_model
 STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
 SLOTS_PER_DAY = 3
-CLASS_SIZE = 14
+CLASS_SIZE = 10
 TIMES = ["9:30AM-10:20AM", "10:30AM-11:20AM", "11:30AM-12:20PM"]
 
 class Student:
