@@ -1,7 +1,7 @@
 curriculum = [
   ("7/19/23", [
     {"MIXED": "Philosophy of Therapy (DS)"},
-    {"MIXED": "How to get the Most Out of SPARCi (JCs)"},
+    {"MIXED": "How to get the Most Out of SPARC (JCs)"},
     {"MIXED": "Markets 101 (RA)"}
   ]),
   ("7/20/23", [
