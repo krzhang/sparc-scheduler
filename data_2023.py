@@ -6,7 +6,7 @@ curriculum = [
   ]),
   ("7/20/23", [
     {"MIXED": "Emotions Make Sense (DS)"},
-    {"MIXED": "Statistical Street Fighting (YZ)"},
+    {"MIXED": "Markets 101 (RA)"},
     {"MIXED": "Automated Market Makers 101 (OS)"}
   ]),
   ("7/21/23", [

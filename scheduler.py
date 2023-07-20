@@ -255,4 +255,8 @@ def test():
   sched = scheduler.make_schedule()
   # print(sched.student_view(students[4]))
   # print(sched.student_view(students[3], html=True))
-  print(sched.class_view(0))
+  return sched
+
+
+# to test:
+# import scheduler; sched = scheduler.test() sched = test(); print (sched.class_view(1))
