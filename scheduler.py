@@ -141,12 +141,12 @@ class Schedule(object):
   def class_view(self, day_index):
     day = self.curriculum[day_index]
     slots, solution = self.solutions[day_index]
-    output = "# {} Schedule\n\n".format(day.date)
+    output = "## {} Schedule\n\n".format(day.date)
     for i, time in enumerate(slots):
-      output += "## " + TIMES[i] + '\n'
+      output += "### " + TIMES[i] + '\n'
       for cl in time:
         first = True
-        print_str = '### {}: '.format(cl.name)
+        print_str = '**{}**: '.format(cl.name)
         for s in self.students:
           if solution[i][s] == cl:
             if first:
@@ -154,7 +154,7 @@ class Schedule(object):
               first = False
             else:
               print_str += ", " + str(s.name)
-        print_str += "\n"
+        print_str += "\n  "
         output += print_str
     return output
     
