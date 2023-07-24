@@ -2,7 +2,7 @@ curriculum = [
   ("7/19/23", [
     {"MIXED": "Philosophy of Therapy (DS)"},
     {"MIXED": "How to get the Most Out of SPARC (JCs)"},
-    {"MIXED": "Markets 101 (RA)"}
+    {"MIXED": "Invisible visible curriculum (DY)"}
   ]),
   ("7/20/23", [
     {"MIXED": "Emotions Make Sense (DS)"},
@@ -11,12 +11,12 @@ curriculum = [
   ]),
   ("7/21/23", [
     {"MIXED": "Diagonalization (JD)"},
-    {"MIXED": "Metamancy (LT)"},
-    {"MIXED": "Crystal Healing (DY)"}
-  ]),
-  ("7/22/23", [
-    {"MIXED": "Invisible visible curriculum (DY)"},
     {"MIXED": "Information Theory (DG)"},
+    {"MIXED": "Crystal Healing (DY)"}
+  ]), 
+  ("7/22/23", [
+    {"MIXED": "Statistical Street Fighting (YZ)"},
+    {"MIXED": "Metamancy (LT)"},
     {"MIXED": "Fun Researchy Math (TC)"},
   ]),  
   ("7/23/23", [
@@ -25,31 +25,21 @@ curriculum = [
     {"MIXED": "REST DAY"}
   ]),
   ("7/24/23", [
-    {"MIXED": "Emotions Make Sense"},
-    {"MIXED": "Multicausality"},
-    {"MIXED": "Game Theory S2: Trust and Betrayal"}
+    {"MIXED": "Hyde: Type Theory (DG)"},
+    {"MIXED": "Millenial: Information Hygiene (DS)"},
+    {"MIXED": "Central: History of American Education (AW)"}
   ]),
   ("7/25/23", [
-    {"MIXED": "LT: Awareness"},
-    {"MIXED": "How Organizations Really Work"},
-    {"MIXED": "Networks and being Agentic"}
+    {"MIXED": "Hyde: Trading Babies (HO)"},  
+    {"MIXED": "Millenial: Introspectivey class (DG)"},
+    {"MIXED": "Central: Developmental Econ (SL)"}
   ]),
-  ("7/26/23", [
-    {"MIXED": "Double Crux"},
-    {"MIXED": "Leadership"},
-    {"MIXED": "LT: Non-coercive Productivity"}
-  ]),
-  ("7/27/23", [
-    {"MIXED": "REST DAY"},
-    {"MIXED": "REST DAY"},
-    {"MIXED": "REST DAY"}
-  ]),
-  ("7/28/23", [
+ ("7/26/23", [
     {"MIXED": "Teach us something!"},
     {"MIXED": "Teach us something!"},
     {"MIXED": "Teach us something!"}
   ]),
-  ("7/29/23", [
+  ("7/27/23", [
     {"MIXED": "SS: It's Okay to be Okay"},
     {"MIXED": "YZ: Why Everything We Teach You at SPARC is Wrong"},
     {"MIXED": "DY: Civilization"}    

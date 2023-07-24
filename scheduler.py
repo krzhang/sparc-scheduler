@@ -1,5 +1,6 @@
 import typing
 import markdown
+import random
 from collections.abc import Sequence
 import csv
 from ortools.sat.python import cp_model
@@ -33,6 +34,7 @@ class Student:
       next(reader, None)
       for row in reader:
         students.append(cls(row[0], row[1]))
+    random.shuffle(students)    
     print ("{} students loaded".format(len(students)))
     return students
 
