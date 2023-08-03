@@ -31,7 +31,7 @@ curriculum = [
   ]),
   ("7/25/23", [
     {"MIXED": "Hyde: Trading Babies (HO)"},  
-    {"MIXED": "Millenial: Introspectivey class (DG)"},
+    {"MIXED": "Millenium: Introspectivey class (DG)"},
     {"MIXED": "Central: Developmental Econ (SL)"}
   ]),
  ("7/26/23", [
@@ -40,8 +40,9 @@ curriculum = [
     {"MIXED": "Teach us something!"}
   ]),
   ("7/27/23", [
-    {"MIXED": "SS: It's Okay to be Okay"},
-    {"MIXED": "YZ: Why Everything We Teach You at SPARC is Wrong"},
-    {"MIXED": "DY: Civilization"}    
+    {"MIXED": "Central: It's Okay to be Okay (SS)"},
+    {"NEWCOMER": "Hyde: Why Everything We Teach You at SPARC is Wrong (YZ)",
+     "RETURNER": "Hyde: Tribes (YZ)"},
+    {"MIXED": "Millenium: Defense Against the Dark Arts (DS)"}    
   ])
 ]
