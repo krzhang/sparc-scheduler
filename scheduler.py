@@ -5,10 +5,12 @@ from collections.abc import Sequence
 import csv
 from ortools.sat.python import cp_model
 
+STUDENT_DATA = "students-2024.csv"
+
 STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
 SLOTS_PER_DAY = 3
-CLASS_SIZE = 10
+CLASS_SIZE = 11
 TIMES = ["9:30AM-10:20AM", "10:30AM-11:20AM", "11:30AM-12:20PM"]
 
 class Student:
@@ -29,7 +31,7 @@ class Student:
   @classmethod
   def load_from_file(cls, filename):
     students = []
-    with open("students-2023.csv", newline='') as csvfile:
+    with open(STUDENT_DATA, newline='') as csvfile:
       reader = csv.reader(csvfile, delimiter=',', quotechar='|')
       next(reader, None)
       for row in reader:
@@ -122,10 +124,12 @@ class Day:
 
 class Schedule(object):
 
-  def __init__(self, students, curriculum, solutions):
+  def __init__(self, students, curriculum, solutions, guest_slots, post_curriculum_text):
     self.students = students
     self.curriculum = curriculum
     self.solutions = solutions # each a solution is a slots, solutions
+    self.guest_slots = guest_slots
+    self.post_curriculum_text = post_curriculum_text
     
   def student_view(self, student, html=False):
     output = "# {}({})'s Schedule\n\n".format(student, student.id)
@@ -144,8 +148,9 @@ class Schedule(object):
     day = self.curriculum[day_index]
     slots, solution = self.solutions[day_index]
     output = "## {} Schedule\n\n".format(day.date)
+    output += "## 9:00AM - 9:30AM: Morning Meta (Juniper Lounge)\n"
     for i, time in enumerate(slots):
-      output += "### " + TIMES[i] + '\n'
+      output += "## " + TIMES[i] + '\n\n'
       for cl in time:
         first = True
         print_str = '**{}**: '.format(cl.name)
@@ -156,8 +161,9 @@ class Schedule(object):
               first = False
             else:
               print_str += ", " + str(s.name)
-        print_str += "\n  "
+        print_str += "\n\n"
         output += print_str
+    output += self.post_curriculum_text.format(self.guest_slots[day_index])
     return output
     
 class Scheduler(object):
@@ -171,9 +177,9 @@ class Scheduler(object):
                     "RETURNER": [s for s in students if s.status == "RETURNER"]}
     self.curriculum = curriculum
   
-  def make_schedule(self):
+  def make_schedule(self, guest_slots, post_curriculum_text):
     solutions = [self.make_schedule_day(day, printing=False) for day in self.curriculum]
-    sched = Schedule(self.students, self.curriculum, solutions)
+    sched = Schedule(self.students, self.curriculum, solutions, guest_slots, post_curriculum_text)
     return sched
   
   def make_schedule_day(self, day, printing=True):
@@ -193,7 +199,7 @@ class Scheduler(object):
       print (f"{len(sc_variables)} variables made")
 
     # TODO: [ortools.sat.python.cp_model API documentation](https://google.github.io/or-tools/python/ortools/sat/python/cp_model.html)
-    
+
     # create the constraints
     # 1. each student is in 1 class per time period:
     for s in student_ids:
@@ -250,11 +256,13 @@ class Scheduler(object):
 
 
 def test():
-  import data_2023
-  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d in data_2023.curriculum]
-  students = Student.load_from_file("students-2023.csv")
+  import data_2024
+  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d, _ in data_2024.curriculum]
+  guest_slots = [x for _, _, x in data_2024.curriculum]
+  post_curriculum_text = data_2024.post_curriculum_text
+  students = Student.load_from_file(STUDENT_DATA)
   scheduler = Scheduler(students, curriculum)
-  sched = scheduler.make_schedule()
+  sched = scheduler.make_schedule(guest_slots, post_curriculum_text)
   # print(sched.student_view(students[4]))
   # print(sched.student_view(students[3], html=True))
   return sched
