@@ -9,7 +9,7 @@ from ortools.sat.python import cp_model
 STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
 SLOTS_PER_DAY = 3
-CLASS_SIZE = 11
+CLASS_SIZE = 10
 TIMES = ["9:30AM-10:20AM", "10:30AM-11:20AM", "11:30AM-12:20PM"]
 
 class Student:
@@ -147,7 +147,7 @@ class Schedule(object):
     day = self.curriculum[day_index]
     slots, solution = self.solutions[day_index]
     output = "## {} Schedule\n\n".format(day.date)
-    output += "## 9:00AM - 9:30AM: Morning Meta (Juniper Lounge)\n"
+    output += "## 9:00AM - 9:30AM: Morning Meta (Sequoia Lounge)\n"
     for i, time in enumerate(slots):
       output += "## " + TIMES[i] + '\n\n'
       for cl in time:
