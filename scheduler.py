@@ -1,11 +1,10 @@
 import typing
+import importlib
 import markdown
 import random
 from collections.abc import Sequence
 import csv
 from ortools.sat.python import cp_model
-
-STUDENT_DATA = "students-2024.csv"
 
 STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
@@ -31,7 +30,7 @@ class Student:
   @classmethod
   def load_from_file(cls, filename):
     students = []
-    with open(STUDENT_DATA, newline='') as csvfile:
+    with open(filename, newline='') as csvfile:
       reader = csv.reader(csvfile, delimiter=',', quotechar='|')
       next(reader, None)
       for row in reader:
@@ -267,6 +266,18 @@ def test():
   # print(sched.student_view(students[3], html=True))
   return sched
 
+def make_schedule(data, student_data_name):
+  data = importlib.import_module(data)
+  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d, _ in data.curriculum]
+  guest_slots = [x for _, _, x in data.curriculum]
+  post_curriculum_text = data.post_curriculum_text
+  students = Student.load_from_file(student_data_name)
+  scheduler = Scheduler(students, curriculum)
+  sched = scheduler.make_schedule(guest_slots, post_curriculum_text)
+  return sched 
+
+
 
 # to test:
 # import scheduler; sched = scheduler.test() sched = test(); print (sched.class_view(1))
+# import scheduler; sched = scheduler.make_schedule("data_2025", students-2025); print (sched.class_view(1))
