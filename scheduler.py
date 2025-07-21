@@ -253,20 +253,13 @@ class Scheduler(object):
         print("Impossible!\n")
       return None
 
-
-def test():
-  import data_2024
-  curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d, _ in data_2024.curriculum]
-  guest_slots = [x for _, _, x in data_2024.curriculum]
-  post_curriculum_text = data_2024.post_curriculum_text
-  students = Student.load_from_file(STUDENT_DATA)
-  scheduler = Scheduler(students, curriculum)
-  sched = scheduler.make_schedule(guest_slots, post_curriculum_text)
-  # print(sched.student_view(students[4]))
-  # print(sched.student_view(students[3], html=True))
-  return sched
-
 def make_schedule(data, student_data_name):
+  """
+  Make the (full) schedule. 
+
+  Testing example:
+  # import scheduler; sched = scheduler.make_schedule("data_2025", students-2025); print (sched.class_view(1))
+  """
   data = importlib.import_module(data)
   curriculum = [Day(date, [ClassBundle(b) for b in d]) for date, d, _ in data.curriculum]
   guest_slots = [x for _, _, x in data.curriculum]
@@ -276,8 +269,15 @@ def make_schedule(data, student_data_name):
   sched = scheduler.make_schedule(guest_slots, post_curriculum_text)
   return sched 
 
+def write_schedule_day(data, student_data_name, day, output_file):
+  """
+  Make one day of the schedule
 
+  Testing example:
+  # import scheduler; scheduler.write_schedule_day("data_2025", "students-2025.csv", 0, "07-21-2025.md") 
+  """
+  sched = make_schedule(data, student_data_name)
+  with open(output_file, 'w') as file:
+    file.write(sched.class_view(day))
+  return 
 
-# to test:
-# import scheduler; sched = scheduler.test() sched = test(); print (sched.class_view(1))
-# import scheduler; sched = scheduler.make_schedule("data_2025", students-2025); print (sched.class_view(1))
