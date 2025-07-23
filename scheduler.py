@@ -212,6 +212,7 @@ class Scheduler(object):
         model.Add(lin_expr == 1)
 
     # 2. minimize difference in class sizes
+    # TODO: if tracking, this is definitely unsat; change somehow
     for i in range(len(class_ids)):
       if i == 0:
         continue
