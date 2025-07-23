@@ -2,13 +2,13 @@ curriculum = [
   ("7/22/25", [
     {"MIXED": "Blackjack (21): Invisible and Visible Curriculum (DY)"},
     {"MIXED": "Catch (22): Emotions Make Sense (DS)"},
-    {"MIXED": "Chromosome (23): Statistical Street Fighting (YZ)"}
+    {"MIXED": "Alphabet (26): Statistical Street Fighting (YZ)"}
   ],
   "[1-on-1 Activity]"),
   ("7/23/25", [
     {"MIXED": "Blackjack (21): Being a Rational Agent (DS)"},
     {"MIXED": "Catch (22): Markets (MM)"},
-    {"MIXED": "Chromosome (23): Close Reading (MK)"}
+    {"MIXED": "Alphabet (26): A History of Values (MK)"}
   ],
   "[No Activity]"
   ),
