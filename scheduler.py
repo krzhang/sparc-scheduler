@@ -211,15 +211,21 @@ class Scheduler(object):
           print("  constraint: " + str(lin_expr))
         model.Add(lin_expr == 1)
 
-    # 2. class size constraints
-    # TODO: change constraint to minimize difference in class sizes
-    for i in class_ids:
+    # 2. minimize difference in class sizes
+    for i in range(len(class_ids)):
+      if i == 0:
+        continue
       lin_expr = 0
+      # add class size for i
       for s in student_ids:
-        lin_expr += sc_variables[(s, i)]
+        lin_expr += sc_variables[(s, class_ids[i])]
+      # sub class size for i - 1
+      for s in student_ids:
+        lin_expr -= sc_variables[(s, class_ids[i-1])]
       if printing:
         print("  constraint: " + str(lin_expr))
-      model.Add(lin_expr <= CLASS_SIZE)
+      # size diff at most 1
+      model.Add(lin_expr <= 1)
 
     # 3. each student goes to all the classes
     for s in student_ids:
@@ -281,4 +287,3 @@ def write_schedule_day(data, student_data_name, day, output_file):
   with open(output_file, 'w') as file:
     file.write(sched.class_view(day))
   return 
-
