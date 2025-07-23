@@ -212,6 +212,7 @@ class Scheduler(object):
         model.Add(lin_expr == 1)
 
     # 2. class size constraints
+    # TODO: change constraint to minimize difference in class sizes
     for i in class_ids:
       lin_expr = 0
       for s in student_ids:
