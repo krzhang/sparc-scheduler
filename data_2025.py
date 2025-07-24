@@ -13,11 +13,11 @@ curriculum = [
   "[No Activity]"
   ),
   ("7/24/25", [
-    {"MIXED": "Canada (1023): Information Hygiene (DS)"}, 
-    {"MIXED": "Nepal (1026): How Not to Do Bad Philosophy (SV)"},
-    {"MIXED": "Ukraine (1028): Statistical Street Fighting (YZ)"}
+    {"MIXED": "Blackjack (21): [Un]spoken Code (ND)"}, 
+    {"MIXED": "Catch (22): Computation ?= Intelligence (AL)"},
+    {"MIXED": "Alphabet (26): 10 things you will learn about b2b saas sales (CJ+CG)"}
   ],
-  "Guest Speaker: Linda Burks"
+  "Guest Speaker: Citadel"
   ), 
   ("7/25/25", [
     {"MIXED": "Invisible and Visible Curricula (DY)"},

@@ -31,7 +31,7 @@ class Student:
   def load_from_file(cls, filename):
     students = []
     with open(filename, newline='') as csvfile:
-      reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+      reader = csv.reader(csvfile, delimiter='|')
       next(reader, None)
       for row in reader:
         students.append(cls(row[0], row[1]))
