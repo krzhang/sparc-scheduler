@@ -20,11 +20,10 @@ curriculum = [
   "Guest Speaker: Citadel"
   ), 
   ("7/25/25", [
-    {"MIXED": "Invisible and Visible Curricula (DY)"},
-    {"MIXED": "Metrics (CW)"},
-    {"MIXED": "Wittgenstein's Poker (MK)"},
+    {"MIXED": "Schelling Games (SL)"},
+    {"MIXED": "Sparks, Batteries, & Rationality (KD)"},
   ],
-  "[No Guest Speaker]"),  
+  "## 7:30PM - on: Alumni Night"),  
   ("7/26/25", [
     {"MIXED": "REST DAY"},
     {"MIXED": "REST DAY"},
@@ -65,6 +64,6 @@ post_curriculum_text = """
 ## 4:00PM - 4:50PM Activity 2
 ## 5:00PM - 5:50PM Activity 3
 ## 6:00PM - 7:30PM Dinner
-## 8:00PM - 9:00PM {}
+{}
 ## 9:00PM - Sleep / Free Time (Lounges)
 """

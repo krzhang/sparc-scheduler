@@ -8,8 +8,6 @@ from ortools.sat.python import cp_model
 
 STATUSES = ["RETURNER", "NEWCOMER"]
 CLASS_STATUSES = ["TRACKED", "MIXED"]
-SLOTS_PER_DAY = 3
-CLASS_SIZE = 10
 TIMES = ["9:30AM-10:20AM", "10:30AM-11:20AM", "11:30AM-12:20PM"]
 
 class Student:
@@ -68,15 +66,15 @@ class ClassBundle:
   def __hash__(self):
     return hash((self.name, self.target))
 
-  def make_classes(self, returner_index):
+  def make_classes(self, returner_index, slot_count):
     """ 
     make a list of classes where the returner index is in the [returner_index] slot, if 
     it is tracked. This allows us to space out where the returners are so they don't clash.
     """
     if self.bundle_status == "MIXED":
-      return [Class("MIXED", self.names["NEWCOMER"]) for i in range(SLOTS_PER_DAY)]
+      return [Class("MIXED", self.names["NEWCOMER"]) for i in range(slot_count)]
     else:
-      lis = [Class("NEWCOMER", self.names["NEWCOMER"]) for i in range(SLOTS_PER_DAY-1)]
+      lis = [Class("NEWCOMER", self.names["NEWCOMER"]) for i in range(slot_count-1)]
       return lis[:returner_index] + [Class("RETURNER", self.names["RETURNER"])] + lis[returner_index:]
 
 class Class:
@@ -109,12 +107,12 @@ class Day:
     """
     self.date = date
     self.class_bundles = classes
-    assert len(classes) == SLOTS_PER_DAY
-    
+    self.slot_count = len(classes)
+  
   def make_slots(self):
     class_slots = []
-    for i in range(SLOTS_PER_DAY):
-      class_slots.append(self.class_bundles[i].make_classes(i))
+    for i in range(self.slot_count):
+      class_slots.append(self.class_bundles[i].make_classes(i, self.slot_count))
     # now we have a 2-d array, where each row is the classes offered during one period of time,
     # we can think of the corresponding columns as room numbers
     # we need to transpose since right now we have the iterations of a class as rows instead of
