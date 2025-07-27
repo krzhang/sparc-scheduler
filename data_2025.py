@@ -31,11 +31,11 @@ curriculum = [
   ],
   "FREEDOM"),
   ("7/27/25", [
-    {"MIXED": "Canada (1023): Lenses (ES)"},
-    {"MIXED": "Nepal (1026): How You Do Anything (DS)"},
-    {"MIXED": "Ukraine (1028): Powerful Knowledge (VB + AZ)"}
+    {"MIXED": "Blackjack (21): Crystal Healing (DY)"},
+    {"MIXED": "Lassen: Embodiment (MM)"},
+    {"MIXED": "Alphabet (26): Introduction to AI Governance (MK)"}
   ],
-  "Lightning Talks (w/ Alumni)"),
+  "## 9-10PM: Night Behind the Curtain"),
   ("7/28/25", [
     {"MIXED": "Canada (1023): Witchcraft (DY)"},  
     {"MIXED": "Nepal (1026): Information Theory (DOG,GT)"},
