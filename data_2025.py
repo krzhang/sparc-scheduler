@@ -37,11 +37,11 @@ curriculum = [
   ],
   "## 9-10PM: Night Behind the Curtain"),
   ("7/28/25", [
-    {"MIXED": "Canada (1023): Witchcraft (DY)"},  
-    {"MIXED": "Nepal (1026): Information Theory (DOG,GT)"},
-    {"MIXED": "Ukraine (1028): Collective Decision-making (MK)"}
+    {"MIXED": "Blackjack (21): Goal Factoring (SL)"},  
+    {"MIXED": "Lassen: Art and Technology (NZ)"},
+    {"MIXED": "Alphabet (26): Learning and Cognition (AL)"}
   ],
-  "Activity Period"),
+  "## 8-9PM: Anthropic (Collin Burns)"),
  ("7/29/25", [
     {"MIXED": "Write and Wrong (AW)"},
     {"MIXED": "why do startups exist (AZ)"},
@@ -60,9 +60,7 @@ post_curriculum_text = """
 ## 12:30PM - 2:00PM Lunch
 ## 2:00PM - 2:30PM Naptime / Exercise Time
 ## 2:30PM - 3:00PM Afternoon Meta (Lassen)
-## 3:00PM - 3:50PM Activity 1
-## 4:00PM - 4:50PM Activity 2
-## 5:00PM - 5:50PM Activity 3
+## 3:00PM - 6:00PM Activities
 ## 6:00PM - 7:30PM Dinner
 {}
 ## 9:00PM - Sleep / Free Time (Lounges)
