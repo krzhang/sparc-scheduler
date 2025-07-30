@@ -49,9 +49,9 @@ curriculum = [
   ],
   "Activity Period"),
   ("7/30/25", [
-    {"MIXED": "Why Everything at SPARC is Wrong (YZ)"},
-    {"MIXED": "SKIN. IN. THE. GAME. (DOG)"},
-    {"MIXED": "Negotiation (CW)"}    
+    {"MIXED": "Blackjack (21): Why Everything We Teach You at SPARC is Wrong (YZ)"},
+    {"MIXED": "Catch (22): Defense Against the Dark Arts (DS)"},
+    {"MIXED": "Alphabet (26): Exploring Taste (AL/DY)"}    
   ],
   "Closing Ceremony")
 ]
